@@ -8,7 +8,7 @@
 
     <!-- Google Fonts -->
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
 
     <!-- Font Awesome -->
@@ -19,16 +19,23 @@
 
     <style>
         :root {
-            --primary: #FF4A57;
-            --secondary: #6C63FF;
-            --accent: #00D4AA;
-            --dark: #0F0F1A;
-            --dark-light: #1A1A2E;
-            --light: #F5F5F7;
-            --gray: #8A8AA3;
-            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            --shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-            --glass: rgba(255, 255, 255, 0.05);
+            --primary: #2563EB;
+            --primary-light: #3B82F6;
+            --primary-dark: #1D4ED8;
+            --secondary: #7C3AED;
+            --accent: #06B6D4;
+            --dark: #0F172A;
+            --dark-light: #1E293B;
+            --light: #F8FAFC;
+            --gray: #94A3B8;
+            --success: #10B981;
+            --gradient: linear-gradient(135deg, #2563EB 0%, #7C3AED 100%);
+            --gradient-hover: linear-gradient(135deg, #1D4ED8 0%, #6D28D9 100%);
+            --transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            --shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            --shadow-light: 0 10px 30px rgba(37, 99, 235, 0.2);
+            --glass: rgba(255, 255, 255, 0.08);
+            --border: rgba(255, 255, 255, 0.1);
         }
 
         * {
@@ -47,14 +54,16 @@
             color: var(--light);
             overflow-x: hidden;
             line-height: 1.6;
+            max-width: 100%;
         }
 
         h1,
         h2,
         h3,
         h4,
-        h5 {
-            font-family: 'Space Grotesk', sans-serif;
+        h5,
+        h6 {
+            font-family: 'Poppins', sans-serif;
             font-weight: 700;
             line-height: 1.2;
         }
@@ -66,31 +75,33 @@
 
         .container {
             width: 100%;
-            max-width: 1200px;
+            max-width: 1280px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 24px;
         }
 
         section {
-            padding: 100px 0;
+            padding: 120px 0;
+            position: relative;
         }
 
         .btn {
             display: inline-flex;
             align-items: center;
-            padding: 14px 32px;
-            background: var(--primary);
+            padding: 16px 36px;
+            background: var(--gradient);
             color: white;
-            border-radius: 50px;
+            border-radius: 12px;
             font-weight: 600;
             font-size: 16px;
             transition: var(--transition);
             border: none;
             cursor: pointer;
-            gap: 10px;
+            gap: 12px;
             position: relative;
             overflow: hidden;
             z-index: 1;
+            box-shadow: var(--shadow-light);
         }
 
         .btn::before {
@@ -100,8 +111,8 @@
             left: 0;
             width: 0%;
             height: 100%;
-            background: var(--secondary);
-            transition: width 0.4s ease;
+            background: var(--gradient-hover);
+            transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
             z-index: -1;
         }
 
@@ -110,42 +121,53 @@
         }
 
         .btn:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 25px 50px rgba(37, 99, 235, 0.3);
         }
 
         .btn-outline {
             background: transparent;
             border: 2px solid var(--primary);
+            color: var(--primary);
         }
 
         .btn-outline:hover {
             background: var(--primary);
+            color: white;
+            border-color: var(--primary);
         }
 
         .section-title {
-            font-size: 3.5rem;
+            font-size: 3.75rem;
             margin-bottom: 20px;
             position: relative;
             display: inline-block;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
         }
 
         .section-title::after {
             content: '';
             position: absolute;
-            bottom: -10px;
+            bottom: -15px;
             left: 0;
-            width: 80px;
+            width: 100px;
             height: 4px;
-            background: var(--primary);
+            background: var(--gradient);
             border-radius: 2px;
+            transform-origin: left;
+            animation: slideIn 1s ease-out;
         }
 
         .section-subtitle {
             color: var(--gray);
-            font-size: 1.2rem;
-            max-width: 600px;
-            margin-bottom: 50px;
+            font-size: 1.25rem;
+            max-width: 700px;
+            margin-bottom: 60px;
+            line-height: 1.8;
         }
 
         /* Floating Particles */
@@ -154,6 +176,7 @@
             width: 100%;
             height: 100%;
             z-index: -1;
+            opacity: 0.3;
         }
 
         /* Header & Navigation */
@@ -162,15 +185,17 @@
             top: 0;
             width: 100%;
             z-index: 1000;
-            padding: 25px 0;
+            padding: 28px 0;
             transition: var(--transition);
+            background: transparent;
         }
 
         header.scrolled {
-            background: rgba(15, 15, 26, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 15px 0;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 18px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid var(--border);
         }
 
         .nav-container {
@@ -180,40 +205,64 @@
         }
 
         .logo {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.8rem;
+            font-family: 'Poppins', sans-serif;
+            font-size: 2rem;
             font-weight: 800;
             color: white;
+            position: relative;
+            padding-right: 10px;
         }
 
         .logo span {
-            color: var(--primary);
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            bottom: 8px;
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
         }
 
         .nav-links {
             display: flex;
-            gap: 40px;
+            gap: 48px;
         }
 
         .nav-links a {
             font-weight: 500;
-            font-size: 1rem;
+            font-size: 1.1rem;
             position: relative;
-            padding: 5px 0;
+            padding: 8px 0;
+            transition: var(--transition);
         }
 
-        .nav-links a::after {
+        .nav-links a::before {
             content: '';
             position: absolute;
             bottom: 0;
             left: 0;
             width: 0;
             height: 2px;
-            background: var(--primary);
-            transition: width 0.3s ease;
+            background: var(--gradient);
+            transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        .nav-links a:hover::after {
+        .nav-links a:hover {
+            color: var(--primary-light);
+        }
+
+        .nav-links a:hover::before {
             width: 100%;
         }
 
@@ -224,6 +273,11 @@
             color: white;
             font-size: 1.5rem;
             cursor: pointer;
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: var(--glass);
+            border: 1px solid var(--border);
         }
 
         /* Hero Section */
@@ -233,46 +287,60 @@
             align-items: center;
             position: relative;
             overflow: hidden;
+            padding-top: 100px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 80% 20%, rgba(37, 99, 235, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 20% 80%, rgba(124, 58, 237, 0.1) 0%, transparent 50%);
+            z-index: -1;
         }
 
         .hero-content {
-            max-width: 700px;
+            max-width: 800px;
             z-index: 2;
         }
 
         .hero-title {
             font-size: 4.5rem;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
             line-height: 1.1;
+            background: linear-gradient(135deg, white 0%, var(--gray) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            animation: floatText 3s ease-in-out infinite;
         }
 
         .hero-title span {
-            color: var(--primary);
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
             position: relative;
         }
 
-        .hero-title span::after {
-            content: '';
-            position: absolute;
-            bottom: 5px;
-            left: 0;
-            width: 100%;
-            height: 8px;
-            background: rgba(255, 74, 87, 0.3);
-            z-index: -1;
-        }
-
         .hero-subtitle {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             color: var(--gray);
-            margin-bottom: 40px;
-            max-width: 600px;
+            margin-bottom: 48px;
+            max-width: 700px;
+            line-height: 1.8;
         }
 
         .hero-cta {
             display: flex;
-            gap: 20px;
-            margin-top: 40px;
+            gap: 24px;
+            margin-top: 48px;
         }
 
         .hero-image {
@@ -281,11 +349,12 @@
             top: 50%;
             transform: translateY(-50%);
             width: 45%;
-            height: 70%;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            height: 75%;
             border-radius: 30px;
             overflow: hidden;
             box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            animation: floatImage 6s ease-in-out infinite;
         }
 
         .hero-image::before {
@@ -293,270 +362,497 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            background: url('https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80') center/cover;
-            mix-blend-mode: multiply;
-            opacity: 0.9;
+            background: url('https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80') center/cover;
+            filter: saturate(1.2) contrast(1.1);
+            z-index: 1;
+        }
+
+        .hero-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient);
+            opacity: 0.2;
+            mix-blend-mode: overlay;
+            z-index: 2;
         }
 
         /* About Section */
         .about {
             background: var(--dark-light);
+            position: relative;
+        }
+
+        .about::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
         }
 
         .about-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 80px;
+            gap: 100px;
             align-items: center;
         }
 
         .about-text h3 {
-            font-size: 2.2rem;
-            margin-bottom: 20px;
+            font-size: 2.5rem;
+            margin-bottom: 24px;
+            color: white;
         }
 
         .about-text p {
             color: var(--gray);
-            margin-bottom: 30px;
-            font-size: 1.1rem;
+            margin-bottom: 32px;
+            font-size: 1.15rem;
+            line-height: 1.8;
         }
 
         .skills {
             display: flex;
             flex-wrap: wrap;
-            gap: 15px;
-            margin-top: 30px;
+            gap: 16px;
+            margin-top: 40px;
         }
 
         .skill {
-            padding: 10px 25px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 50px;
+            padding: 14px 28px;
+            background: var(--glass);
+            border-radius: 12px;
             font-weight: 500;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border);
             transition: var(--transition);
+            cursor: pointer;
         }
 
         .skill:hover {
             background: var(--primary);
-            transform: translateY(-5px);
+            transform: translateY(-5px) scale(1.05);
+            border-color: var(--primary);
+            box-shadow: var(--shadow-light);
         }
 
         .stats {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
+            gap: 32px;
         }
 
         .stat-item {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 30px;
+            background: var(--glass);
+            padding: 40px 30px;
             border-radius: 20px;
             text-align: center;
             transition: var(--transition);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .stat-item:hover::before {
+            transform: scaleX(1);
         }
 
         .stat-item:hover {
-            transform: translateY(-10px);
+            transform: translateY(-15px);
             border-color: var(--primary);
+            box-shadow: var(--shadow);
         }
 
         .stat-number {
-            font-size: 3rem;
+            font-size: 3.5rem;
             font-weight: 800;
-            color: var(--primary);
-            margin-bottom: 10px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+            line-height: 1;
         }
 
         .stat-text {
             color: var(--gray);
-            font-size: 1rem;
+            font-size: 1.1rem;
+            font-weight: 500;
         }
 
         /* Portfolio Section */
-        .portfolio-filter {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 60px;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            padding: 10px 25px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--gray);
-            border-radius: 50px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .filter-btn.active,
-        .filter-btn:hover {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 30px;
-        }
-
-        .portfolio-item {
+        .portfolio {
+            padding: 140px 0;
             position: relative;
-            border-radius: 20px;
-            overflow: hidden;
-            height: 400px;
-            cursor: pointer;
         }
 
-        .portfolio-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.8s ease;
-        }
-
-        .portfolio-overlay {
+        .portfolio::before {
+            content: '';
             position: absolute;
-            bottom: 0;
+            top: 0;
             left: 0;
-            width: 100%;
-            padding: 30px;
-            background: linear-gradient(to top, rgba(15, 15, 26, 0.95), transparent);
-            transform: translateY(20px);
-            opacity: 0;
-            transition: var(--transition);
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.05) 0%, transparent 50%);
+            z-index: -1;
         }
 
-        .portfolio-item:hover .portfolio-overlay {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        .portfolio-item:hover .portfolio-img {
-            transform: scale(1.05);
+        .portfolio-header {
+            text-align: center;
+            margin-bottom: 80px;
         }
 
         .portfolio-title {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
+            font-size: 3.75rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
         }
 
-        .portfolio-category {
-            color: var(--primary);
-            font-weight: 500;
-            font-size: 0.9rem;
+        .portfolio-subtitle {
+            color: var(--gray);
+            font-size: 1.25rem;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* Portfolio Grid */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .portfolio-card {
+            background: var(--glass);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: var(--transition);
+            border: 1px solid var(--border);
+            position: relative;
+            height: 100%;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .portfolio-card:hover {
+            transform: translateY(-20px) rotateX(5deg);
+            border-color: var(--primary);
+            box-shadow: var(--shadow);
+        }
+
+        .portfolio-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 1;
+        }
+
+        .portfolio-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Card Image */
+        .card-image {
+            position: relative;
+            height: 380px;
+            overflow: hidden;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .portfolio-card:hover .card-image img {
+            transform: scale(1.1);
+        }
+
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent 50%, rgba(15, 23, 42, 0.95) 100%);
+            z-index: 1;
+        }
+
+        .card-category {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: var(--gradient);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            z-index: 2;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        }
+
+        /* Card Content */
+        .card-content {
+            padding: 32px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .card-content h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .card-content p {
+            color: var(--gray);
+            font-size: 1rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Filter Buttons */
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+            margin-bottom: 60px;
+            padding: 20px 0;
+        }
+
+        .filter-btn {
+            padding: 14px 32px;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            color: var(--gray);
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            outline: none;
+        }
+
+        .filter-btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .filter-btn.active {
+            background: var(--gradient);
+            border-color: transparent;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
         }
 
         /* Contact Section */
         .contact {
+            background: var(--dark-light);
+            position: relative;
             text-align: center;
+        }
+
+        .contact::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
         }
 
         .contact-info {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-top: 60px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 80px;
         }
 
         .contact-card {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 40px 30px;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--glass);
+            padding: 48px 32px;
+            border-radius: 24px;
+            border: 1px solid var(--border);
             transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .contact-card:hover::before {
+            opacity: 1;
         }
 
         .contact-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-15px);
             border-color: var(--primary);
+            box-shadow: var(--shadow);
         }
 
         .contact-icon {
-            width: 70px;
-            height: 70px;
-            background: rgba(255, 74, 87, 0.1);
-            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            background: var(--gradient);
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.8rem;
-            color: var(--primary);
-            margin: 0 auto 25px;
+            font-size: 2rem;
+            color: white;
+            margin: 0 auto 32px;
+            transition: var(--transition);
+        }
+
+        .contact-card:hover .contact-icon {
+            transform: rotateY(180deg);
+            background: var(--gradient-hover);
         }
 
         .contact-card h3 {
-            margin-bottom: 15px;
-            font-size: 1.4rem;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            color: white;
         }
 
         .contact-card p {
             color: var(--gray);
+            font-size: 1.1rem;
+            margin-bottom: 24px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            padding: 80px 0 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+        }
+
+        .footer-logo {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 32px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-text {
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto 48px;
+            font-size: 1.1rem;
+            line-height: 1.8;
         }
 
         .social-links {
             display: flex;
             justify-content: center;
-            gap: 20px;
-            margin-top: 50px;
+            gap: 24px;
+            margin-top: 48px;
         }
 
         .social-link {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.05);
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            background: var(--glass);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             transition: var(--transition);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border);
         }
 
         .social-link:hover {
             background: var(--primary);
-            transform: translateY(-5px);
-        }
-
-        /* Footer */
-        footer {
-            background: var(--dark-light);
-            padding: 60px 0 30px;
-            text-align: center;
-        }
-
-        .footer-logo {
-            font-size: 2rem;
-            font-weight: 800;
-            margin-bottom: 30px;
+            transform: translateY(-8px) rotate(10deg);
+            border-color: var(--primary);
+            box-shadow: var(--shadow-light);
         }
 
         .copyright {
             color: var(--gray);
-            font-size: 0.9rem;
-            margin-top: 40px;
-            padding-top: 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.95rem;
+            margin-top: 60px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border);
         }
 
-        /* Animation Classes */
-        .animate-float {
-            animation: float 6s ease-in-out infinite;
-        }
-
+        /* Animations */
         @keyframes float {
 
             0%,
             100% {
-                transform: translateY(0);
+                transform: translateY(0px);
             }
 
             50% {
@@ -564,14 +860,92 @@
             }
         }
 
-        /* Responsive Design */
-        @media (max-width: 992px) {
-            .section-title {
-                font-size: 2.8rem;
+        @keyframes floatText {
+
+            0%,
+            100% {
+                transform: translateY(0);
             }
 
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes floatImage {
+
+            0%,
+            100% {
+                transform: translateY(-50%) rotate(0deg);
+            }
+
+            33% {
+                transform: translateY(-50%) rotate(1deg);
+            }
+
+            66% {
+                transform: translateY(-50%) rotate(-1deg);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: scaleX(0);
+            }
+
+            to {
+                transform: scaleX(1);
+            }
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.5;
+                transform: scale(1.1);
+            }
+        }
+
+        @keyframes glow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 20px rgba(37, 99, 235, 0.3);
+            }
+
+            50% {
+                box-shadow: 0 0 40px rgba(37, 99, 235, 0.6);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .hero-title {
+                font-size: 4rem;
+            }
+
+            .section-title {
+                font-size: 3.25rem;
+            }
+
+            .about-content {
+                gap: 60px;
+            }
+        }
+
+        @media (max-width: 992px) {
             .hero-title {
                 font-size: 3.5rem;
+            }
+
+            .section-title {
+                font-size: 2.75rem;
             }
 
             .about-content {
@@ -582,6 +956,10 @@
             .hero-image {
                 display: none;
             }
+
+            .portfolio-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
         @media (max-width: 768px) {
@@ -590,15 +968,17 @@
             }
 
             .mobile-menu-btn {
-                display: block;
-            }
-
-            .section-title {
-                font-size: 2.3rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
 
             .hero-title {
-                font-size: 2.8rem;
+                font-size: 2.75rem;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
             }
 
             .hero-cta {
@@ -609,20 +989,63 @@
             .btn {
                 width: 100%;
                 justify-content: center;
+                min-height: 56px;
             }
 
             .portfolio-grid {
                 grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .contact-info {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                gap: 20px;
+            }
+
+            .stat-item {
+                padding: 32px 24px;
+            }
+
+            .stat-number {
+                font-size: 2.75rem;
+            }
+
+            .filter-container {
+                gap: 12px;
+            }
+
+            .filter-btn {
+                padding: 12px 24px;
+                font-size: 0.95rem;
             }
         }
 
         @media (max-width: 480px) {
             .hero-title {
-                font-size: 2.3rem;
+                font-size: 2.25rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
             }
 
             section {
-                padding: 70px 0;
+                padding: 80px 0;
+            }
+
+            .hero {
+                padding-top: 120px;
+            }
+
+            .stat-number {
+                font-size: 2.25rem;
+            }
+
+            .card-image {
+                height: 320px;
             }
         }
     </style>
@@ -635,7 +1058,7 @@
     <!-- Header -->
     <header id="header">
         <div class="container nav-container">
-            <a href="#" class="logo">Design with <span>Sameer</span></a>
+            <a href="#" class="logo">Designwith<span>Sameer</span></a>
 
             <nav class="nav-links">
                 <a href="#home">Home</a>
@@ -653,22 +1076,22 @@
     <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="container">
-            <div class="hero-content" data-aos="fade-up" data-aos-duration="1000">
-                <h1 class="hero-title">Transforming Ideas into <span>Visual Masterpieces</span></h1>
-                <p class="hero-subtitle">I'm Sameer, a professional graphic designer specializing in creating compelling
-                    brand identities, posters, and digital designs that tell your story and captivate your audience.</p>
+            <div class="hero-content" data-aos="fade-up" data-aos-duration="1200">
+                <h1 class="hero-title">Visual Excellence, <span>Strategic Design</span></h1>
+                <p class="hero-subtitle">I'm Sameer, a professional graphic designer creating compelling brand
+                    experiences that blend creativity with strategy to deliver impactful visual solutions.</p>
 
                 <div class="hero-cta">
                     <a href="#portfolio" class="btn">
-                        <i class="fas fa-eye"></i> View My Work
+                        <i class="fas fa-sparkles"></i> View Portfolio
                     </a>
                     <a href="#contact" class="btn btn-outline">
-                        <i class="fas fa-paper-plane"></i> Hire Me
+                        <i class="fas fa-rocket"></i> Start Project
                     </a>
                 </div>
             </div>
 
-            <div class="hero-image" data-aos="fade-left" data-aos-duration="1200"></div>
+            <div class="hero-image" data-aos="fade-left" data-aos-duration="1600" data-aos-delay="400"></div>
         </div>
     </section>
 
@@ -676,413 +1099,298 @@
     <section class="about" id="about">
         <div class="container">
             <h2 class="section-title" data-aos="fade-up">About Me</h2>
-            <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Crafting visual experiences that
-                resonate with audiences and drive results</p>
+            <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Crafting visual narratives that resonate
+                and drive meaningful connections</p>
 
             <div class="about-content">
-                <div class="about-text" data-aos="fade-right">
-                    <h3>Designing with Purpose & Passion</h3>
-                    <p>With 5+ years of professional experience, I specialize in creating visual identities that stand
-                        out in today's competitive market. My approach combines strategic thinking with creative
-                        execution to deliver designs that not only look beautiful but also achieve business objectives.
-                    </p>
-                    <p>Every project is an opportunity to create something meaningful. I believe in the power of design
-                        to communicate, persuade, and create emotional connections.</p>
+                <div class="about-text" data-aos="fade-right" data-aos-delay="200">
+                    <h3>Design with Purpose</h3>
+                    <p>With over 3 years of professional experience, I specialize in creating visual identities that
+                        stand out in today's competitive landscape. My approach combines strategic thinking with
+                        creative execution.</p>
+                    <p>Every project is an opportunity to tell a story. I believe in the power of design to communicate,
+                        persuade, and create emotional connections that drive business results.</p>
 
                     <div class="skills">
                         <div class="skill">Brand Identity</div>
                         <div class="skill">Poster Design</div>
-                        <div class="skill">Social Media Graphics</div>
-                        <div class="skill">UI/UX Design</div>
                         <div class="skill">Typography</div>
-                        <div class="skill">Illustration</div>
+                        <div class="skill">Motion Graphics</div>
                     </div>
                 </div>
 
-                <div class="stats" data-aos="fade-left">
+                <div class="stats" data-aos="fade-left" data-aos-delay="200">
                     <div class="stat-item">
                         <div class="stat-number">150+</div>
-                        <div class="stat-text">Projects Completed</div>
+                        <div class="stat-text">Projects Delivered</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-number">50+</div>
-                        <div class="stat-text">Happy Clients</div>
+                        <div class="stat-number">98%</div>
+                        <div class="stat-text">Client Satisfaction</div>
                     </div>
                     <div class="stat-item">
                         <div class="stat-number">5+</div>
                         <div class="stat-text">Years Experience</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-number">100%</div>
-                        <div class="stat-text">Satisfaction Rate</div>
+                        <div class="stat-number">50+</div>
+                        <div class="stat-text">Happy Clients</div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ================= PORTFOLIO SECTION ================= -->
+    <!-- Portfolio Section -->
     <section class="portfolio" id="portfolio">
         <div class="container">
-            <!-- Section Header -->
-            <div class="portfolio-header">
-                <h2 class="section-title">My Design Work</h2>
-                <p class="section-subtitle">Professional graphic designs for concerts, sports events, and branding</p>
+            <div class="portfolio-header" data-aos="fade-up">
+                <h2 class="portfolio-title">Featured Work</h2>
+                <p class="portfolio-subtitle">A showcase of professional design projects across various industries</p>
             </div>
-            <!-- Filter Buttons -->
+
             <div class="filter-container">
                 <button class="filter-btn active" data-filter="all">All Projects</button>
                 <button class="filter-btn" data-filter="concert">Concert Posters</button>
                 <button class="filter-btn" data-filter="sports">Sports Events</button>
                 <button class="filter-btn" data-filter="event">Community Events</button>
             </div>
+
+            <div class="portfolio-grid">
+                <!-- Project 1 -->
+                <div class="portfolio-card" data-category="event" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card-image">
+                        <img src="https://i.ibb.co/hF8tysfD/41380.jpg" alt="Movie Day Event" loading="lazy">
+                        <div class="image-overlay"></div>
+                        <span class="card-category">Community</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>Movie Day Event</h3>
+                        <p>Promotional poster for community movie screening at Minhaj Art Gallery</p>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="portfolio-card" data-category="concert" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card-image">
+                        <img src="https://i.ibb.co/4wBRSBgW/41401.jpg" alt="Amp'd Up Concert" loading="lazy">
+                        <div class="image-overlay"></div>
+                        <span class="card-category">Concert</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>Amp'd Up Live</h3>
+                        <p>Poster for Bayan Xhavi concert at Rock Musicarium Islamabad</p>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="portfolio-card" data-category="concert" data-aos="fade-up" data-aos-delay="300">
+                    <div class="card-image">
+                        <img src="https://i.ibb.co/FkFsJXCv/41402.jpg" alt="Atif Aslam Concert" loading="lazy">
+                        <div class="image-overlay"></div>
+                        <span class="card-category">Celebrity</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>Atif Aslam Live</h3>
+                        <p>Poster for Atif Aslam concert experience in Islamabad</p>
+                    </div>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="portfolio-card" data-category="sports" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card-image">
+                        <img src="https://i.ibb.co/4RD8Y06v/41403.jpg" alt="Bolt Sports Fest" loading="lazy">
+                        <div class="image-overlay"></div>
+                        <span class="card-category">Sports</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>Bolt Sports Fest</h3>
+                        <p>Sports event poster for Leads University Lahore</p>
+                    </div>
+                </div>
+
+                <!-- Project 5 -->
+                <div class="portfolio-card" data-category="sports" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card-image">
+                        <img src="https://i.ibb.co/ZpT5886G/41404.jpg" alt="Chess Tournament" loading="lazy">
+                        <div class="image-overlay"></div>
+                        <span class="card-category">Sports</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>University Chess Tournament</h3>
+                        <p>Chess competition with Hassan Raheem concert</p>
+                    </div>
+                </div>
+
+                <!-- Project 6 -->
+                <div class="portfolio-card" data-category="sports" data-aos="fade-up" data-aos-delay="300">
+                    <div class="card-image">
+                        <img src="https://i.ibb.co/Y7BXDMYN/41405.jpg" alt="Sports Fest Main" loading="lazy">
+                        <div class="image-overlay"></div>
+                        <span class="card-category">Major Event</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>Bolt Sports Fest 2025</h3>
+                        <p>Main poster for Pakistan's biggest sports festival</p>
+                    </div>
+                </div>
+
+                <!-- Project 7 -->
+                <div class="portfolio-card" data-category="sports" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card-image">
+                        <img src="https://i.ibb.co/3mpJykNV/41406.jpg" alt="Bolt Sports Fest" loading="lazy">
+                        <div class="image-overlay"></div>
+                        <span class="card-category">Sports</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>Bolt Sports Fest</h3>
+                        <p>Main sports festival poster design</p>
+                    </div>
+                </div>
+
+                <!-- Project 8 -->
+                <div class="portfolio-card" data-category="concert" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card-image">
+                        <img src="https://i.ibb.co/Q7mrczZR/41408.jpg" alt="Music Night" loading="lazy">
+                        <div class="image-overlay"></div>
+                        <span class="card-category">Music</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>BSF Music Night</h3>
+                        <p>Music night poster featuring Hassan Raheem</p>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <!-- Portfolio Grid -->
-        <div class="portfolio-grid">
-
-            <!-- Project 1: MOVIE DAY -->
-            <div class="portfolio-card" data-category="event">
-                <div class="card-image">
-                    <img src="https://i.ibb.co/hF8tysfD/41380.jpg" alt="Entrepreneurial Movie Day Poster"
-                        loading="lazy">
-                    <div class="image-overlay"></div>
-                    <span class="card-category">Community Event</span>
-                </div>
-                <div class="card-content">
-                    <h3>Movie Day Event</h3>
-                    <p>Promotional poster for community movie screening at Minhaj Art Gallery</p>
-                </div>
-            </div>
-
-            <!-- Project 2: AMP'D UP CONCERT -->
-            <div class="portfolio-card" data-category="concert">
-                <div class="card-image">
-                    <img src="https://i.ibb.co/4wBRSBgW/41401.jpg" alt="Amp'd Up Concert Poster" loading="lazy">
-                    <div class="image-overlay"></div>
-                    <span class="card-category">Concert Poster</span>
-                </div>
-                <div class="card-content">
-                    <h3>Amp'd Up Live Concert</h3>
-                    <p>Poster for Bayan Xhavi concert at Rock Musicarium Islamabad</p>
-                </div>
-            </div>
-
-            <!-- Project 3: ATIF ASLAM CONCERT -->
-            <div class="portfolio-card" data-category="concert">
-                <div class="card-image">
-                    <img src="https://i.ibb.co/FkFsJXCv/41402.jpg" alt="Atif Aslam Concert Poster" loading="lazy">
-                    <div class="image-overlay"></div>
-                    <span class="card-category">Celebrity Concert</span>
-                </div>
-                <div class="card-content">
-                    <h3>Atif Aslam Live</h3>
-                    <p>Poster for Atif Aslam concert experience in Islamabad</p>
-                </div>
-            </div>
-
-            <!-- Project 4: BOLT SPORTS FEST AMOR -->
-            <div class="portfolio-card" data-category="sports">
-                <div class="card-image">
-                    <img src="https://i.ibb.co/4RD8Y06v/41403.jpg" alt="Bolt Sports Fest AMOR" loading="lazy">
-                    <div class="image-overlay"></div>
-                    <span class="card-category">Sports Festival</span>
-                </div>
-                <div class="card-content">
-                    <h3>Bolt Sports Fest: AMOR</h3>
-                    <p>Sports event poster for Leads University Lahore</p>
-                </div>
-            </div>
-
-            <!-- Project 5: CHESS TOURNAMENT -->
-            <div class="portfolio-card" data-category="sports">
-                <div class="card-image">
-                    <img src="https://i.ibb.co/ZpT5886G/41404.jpg" alt="Chess Tournament Poster" loading="lazy">
-                    <div class="image-overlay"></div>
-                    <span class="card-category">Sports Tournament</span>
-                </div>
-                <div class="card-content">
-                    <h3>University Chess Tournament</h3>
-                    <p>Chess competition poster with Hassan Raheem concert</p>
-                </div>
-            </div>
-
-            <!-- Project 6: BOLT SPORTS FEST MAIN -->
-            <div class="portfolio-card" data-category="sports">
-                <div class="card-image">
-                    <img src="https://i.ibb.co/Y7BXDMYN/41405.jpg" alt="Bolt Sports Fest Main" loading="lazy">
-                    <div class="image-overlay"></div>
-                    <span class="card-category">Major Sports Event</span>
-                </div>
-                <div class="card-content">
-                    <h3>Bolt Sports Fest 2025</h3>
-                    <p>Main poster for Pakistan's biggest sports festival</p>
-                </div>
-            </div>
-
-            <!-- Project 7: STARS ACADEMY -->
-            <div class="portfolio-card" data-category="sports">
-                <div class="card-image">
-                    <img src="https://i.ibb.co/3mpJykNV/41406.jpg" alt="Boly Sports Fest" loading="lazy">
-                    <div class="image-overlay"></div>
-                    <span class="card-category">Sports</span>
-                </div>
-                <div class="card-content">
-                    <h3>Bolt Sports Fest</h3>
-                    <p>Main poster for Pakistan's biggest sports festival</p>
-                </div>
-            </div>
-
-            <!-- Project 8: BSF MUSIC NIGHT -->
-            <div class="portfolio-card" data-category="concert">
-                <div class="card-image">
-                    <img src="https://i.ibb.co/Q7mrczZR/41408.jpg" alt="BSF Music Night" loading="lazy">
-                    <div class="image-overlay"></div>
-                    <span class="card-category">Music Event</span>
-                </div>
-                <div class="card-content">
-                    <h3>BSF Music Night</h3>
-                    <p>Music night poster featuring Hassan Raheem</p>
-                </div>
-            </div>
-
-        </div>
-
     </section>
 
-    <style>
-        /* ========== PORTFOLIO STYLES ========== */
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Let's Create</h2>
+            <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Ready to bring your vision to life? Get
+                in touch and let's discuss your next project</p>
 
-        .portfolio {
-            padding: 100px 0;
-            background: linear-gradient(135deg, #0a0a0f 0%, #151522 100%);
-        }
+            <div class="contact-info">
+                <div class="contact-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="contact-icon">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                    <h3>Instagram</h3>
+                    <p>@designwithsameer</p>
+                    <a href="https://instagram.com/designwithsameer" target="_blank" class="btn"
+                        style="margin-top: 24px; padding: 12px 24px; font-size: 0.95rem;">
+                        <i class="fas fa-external-link-alt"></i> Follow Me
+                    </a>
+                </div>
 
-        .portfolio-header {
-            text-align: center;
-            margin-bottom: 60px;
-        }
+                <div class="contact-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <h3>Phone</h3>
+                    <p>+92 319 1065150</p>
+                    <a href="tel:+923191065150" class="btn"
+                        style="margin-top: 24px; padding: 12px 24px; font-size: 0.95rem;">
+                        <i class="fas fa-phone"></i> Call Now
+                    </a>
+                </div>
 
-        .section-title {
-            font-size: 3.5rem;
-            font-weight: 800;
-            background: linear-gradient(45deg, #FF4A57, #6C63FF);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 15px;
-        }
+                <div class="contact-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3>Email</h3>
+                    <p>pakskydesigner@gmail.com</p>
+                    <a href="mailto:pakskydesigner@gmail.com" class="btn"
+                        style="margin-top: 24px; padding: 12px 24px; font-size: 0.95rem;">
+                        <i class="fas fa-paper-plane"></i> Send Email
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        .section-subtitle {
-            color: #8A8AA3;
-            font-size: 1.2rem;
-            max-width: 600px;
-            margin: 0 auto;
-        }
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-logo">Designwith<span>Sameer</span></div>
+            <p class="footer-text">Creating visual experiences that leave lasting impressions and drive meaningful
+                connections between brands and their audiences.</p>
 
-        /* Portfolio Grid */
-        .portfolio-grid {
-            display: grid !important;
-            grid-template-columns: repeat(3, 1fr) !important;
-            gap: 35px;
-            margin-bottom: 50px;
-            \
- margin-top: 30px !important;
-        }
+            <div class="copyright">
+                &copy; 2026 Sameer Designs. All rights reserved. | Crafted with <i class="fas fa-heart"
+                    style="color: #EF4444;"></i> in Pakistan
+            </div>
+        </div>
+    </footer>
 
-        /* Portfolio Card */
-        .portfolio-card {
-            width: 100% !important;
-            max-width: 420px !important;
-            margin: 0 auto !important;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 20px;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            position: relative;
-            height: 100%;
-        }
-
-        .portfolio-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(255, 74, 87, 0.3);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        /* Card Image */
-        .card-image {
-            position: relative;
-            height: 380px;
-            overflow: hidden;
-            background: #000;
-        }
-
-        .card-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            /* This shows ENTIRE image */
-            display: block;
-            transition: transform 0.6s ease;
-            background: #000;
-        }
-
-        .portfolio-card:hover .card-image img {
-            transform: scale(1.03);
-        }
-
-        .image-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, transparent 60%, rgba(0, 0, 0, 0.8) 100%);
-            opacity: 0.7;
-            transition: opacity 0.3s ease;
-        }
-
-        .portfolio-card:hover .image-overlay {
-            opacity: 0.9;
-        }
-
-        .card-category {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: linear-gradient(45deg, #FF4A57, #FF3838);
-            color: white;
-            padding: 6px 15px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            z-index: 2;
-        }
-
-        /* Card Content */
-        .card-content {
-            padding: 25px;
-        }
-
-        .card-content h3 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: white;
-            margin-bottom: 10px;
-            line-height: 1.3;
-        }
-
-        .card-content p {
-            color: #8A8AA3;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin: 0;
-        }
-
-        /* Filter Buttons */
-        .filter-container {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-top: 40px;
-            margin-bottom: 50px;
-            padding: 20px 0 !important;
-        }
-
-        .filter-btn {
-            padding: 12px 28px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #8A8AA3;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            outline: none;
-        }
-
-        .filter-btn:hover {
-            background: rgba(255, 74, 87, 0.1);
-            border-color: rgba(255, 74, 87, 0.3);
-            color: #FF4A57;
-        }
-
-        .filter-btn.active {
-            background: linear-gradient(45deg, #FF4A57, #FF3838);
-            border-color: transparent;
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(255, 74, 87, 0.3);
-        }
-
-        /* Responsive Design */
-        @media (max-width: 992px) {
-            .portfolio-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 25px;
-            }
-
-            .section-title {
-                font-size: 2.8rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .portfolio {
-                padding: 70px 0;
-            }
-
-            .portfolio-grid {
-                grid-template-columns: 1fr;
-                gap: 25px;
-            }
-
-            .section-title {
-                font-size: 2.3rem;
-            }
-
-            .card-image {
-                height: 350px;
-            }
-
-            .filter-container {
-                gap: 10px;
-            }
-
-            .filter-btn {
-                padding: 10px 20px;
-                font-size: 0.9rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .card-image {
-                height: 320px;
-            }
-
-            .card-content {
-                padding: 20px;
-            }
-
-            .card-content h3 {
-                font-size: 1.2rem;
-            }
-        }
-    </style>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
     <script>
-        // Portfolio Filtering Script
+        // Initialize AOS with enhanced settings
+        AOS.init({
+            duration: 1200,
+            once: true,
+            offset: 100,
+            easing: 'ease-out-cubic',
+            disable: 'mobile'
+        });
+
+        // Enhanced Particles.js Background
+        particlesJS("particles-js", {
+            particles: {
+                number: { value: 60, density: { enable: true, value_area: 1000 } },
+                color: { value: "#3B82F6" },
+                shape: { type: "circle" },
+                opacity: { value: 0.3, random: true, anim: { enable: true, speed: 1, opacity_min: 0.1 } },
+                size: { value: 3, random: true, anim: { enable: true, speed: 2, size_min: 0.1 } },
+                line_linked: {
+                    enable: true,
+                    distance: 200,
+                    color: "#7C3AED",
+                    opacity: 0.2,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 1,
+                    direction: "none",
+                    random: true,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false,
+                    attract: { enable: true, rotateX: 600, rotateY: 1200 }
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "grab" },
+                    onclick: { enable: true, mode: "push" },
+                    resize: true
+                },
+                modes: {
+                    grab: { distance: 200, line_linked: { opacity: 0.5 } },
+                    push: { particles_nb: 4 }
+                }
+            },
+            retina_detect: true
+        });
+
+        // Header Scroll Effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Enhanced Portfolio Filtering
         document.addEventListener('DOMContentLoaded', function () {
             const filterButtons = document.querySelectorAll('.filter-btn');
             const portfolioCards = document.querySelectorAll('.portfolio-card');
@@ -1096,14 +1404,14 @@
                         card.style.display = 'block';
                         setTimeout(() => {
                             card.style.opacity = '1';
-                            card.style.transform = 'translateY(0)';
-                        }, 50);
+                            card.style.transform = 'translateY(0) scale(1)';
+                        }, 100);
                     } else {
                         card.style.opacity = '0';
-                        card.style.transform = 'translateY(20px)';
+                        card.style.transform = 'translateY(20px) scale(0.95)';
                         setTimeout(() => {
                             card.style.display = 'none';
-                        }, 300);
+                        }, 400);
                     }
                 });
             }
@@ -1112,10 +1420,14 @@
             filterButtons.forEach(button => {
                 button.addEventListener('click', function () {
                     // Remove active class from all buttons
-                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    filterButtons.forEach(btn => {
+                        btn.classList.remove('active');
+                        btn.style.transform = 'translateY(0)';
+                    });
 
                     // Add active class to clicked button
                     this.classList.add('active');
+                    this.style.transform = 'translateY(-3px)';
 
                     // Get filter category
                     const filterCategory = this.getAttribute('data-filter');
@@ -1123,211 +1435,77 @@
                     // Filter portfolio
                     filterPortfolio(filterCategory);
 
-                    // Log for debugging
-                    console.log(`Filtering by: ${filterCategory}`);
+                    // Add bounce animation
+                    this.style.animation = 'none';
+                    setTimeout(() => {
+                        this.style.animation = '';
+                    }, 10);
                 });
             });
 
-            // Add hover effects for cards
+            // Add hover effects to cards
             portfolioCards.forEach(card => {
                 card.addEventListener('mouseenter', function () {
-                    this.style.zIndex = '10';
+                    this.style.zIndex = '100';
                 });
 
                 card.addEventListener('mouseleave', function () {
                     this.style.zIndex = '1';
                 });
             });
-
-            // Check if images load properly
-            const images = document.querySelectorAll('.card-image img');
-            images.forEach(img => {
-                img.addEventListener('load', function () {
-                    console.log(`✅ Loaded: ${this.alt}`);
-                });
-
-                img.addEventListener('error', function () {
-                    console.error(`❌ Failed to load: ${this.src}`);
-                    this.style.border = '2px solid #FF4A57';
-                });
-            });
-
-            // Initial console message
-            console.log('🎨 Portfolio loaded successfully!');
-            console.log('Projects: 8 | Categories: Concert, Sports, Event, Education');
-        });
-    </script>
-    <!-- Contact Section -->
-    <section class="contact" id="contact">
-        <div class="container">
-            <h2 class="section-title" data-aos="fade-up">Let's Create Something Amazing</h2>
-            <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Ready to bring your vision to
-                life? Get
-                in touch and let's discuss your project</p>
-
-            <div class="contact-info">
-                <div class="contact-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="contact-icon">
-                        <i class="fab fa-instagram"></i>
-                    </div>
-                    <h3>Instagram</h3>
-                    <p>@designwithsameer</p>
-                    <a href="https://instagram.com/designwithsameer" target="_blank" class="btn"
-                        style="margin-top: 20px; padding: 10px 20px; font-size: 14px;">
-                        <i class="fas fa-external-link-alt"></i> Follow Me
-                    </a>
-                </div>
-
-                <div class="contact-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="contact-icon">
-                        <i class="fas fa-phone"></i>
-                    </div>
-                    <h3>Phone</h3>
-                    <p>+92 319 1065150</p>
-                    <a href="tel:+923191065150" class="btn"
-                        style="margin-top: 20px; padding: 10px 20px; font-size: 14px;">
-                        <i class="fas fa-phone"></i> Call Now
-                    </a>
-                </div>
-
-                <div class="contact-card" data-aos="fade-up" data-aos-delay="300">
-                    <div class="contact-icon">
-                        <i class="fas fa-envelope"></i>
-                    </div>
-                    <h3>Email</h3>
-                    <p>pakskydesigner@gmail.com</p>
-                    <a href="mailto:pakskydesigner@gmail.com" class="btn"
-                        style="margin-top: 20px; padding: 10px 20px; font-size: 14px;">
-                        <i class="fas fa-paper-plane"></i> Send Email
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-logo">Design with <span>Sameer</span></div>
-            <p style="color: var(--gray); max-width: 600px; margin: 0 auto;">Creating visual experiences that
-                leave
-                lasting impressions and drive meaningful connections between brands and their audiences.</p>
-
-            <div class="copyright">
-                &copy; 2026 Design with Sameer. All rights reserved. | Crafted with <i class="fas fa-heart"
-                    style="color: var(--primary);"></i> in Pakistan
-            </div>
-        </div>
-    </footer>
-
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-
-    <script>
-        // Initialize AOS (Animate On Scroll)
-        AOS.init({
-            duration: 1000,
-            once: true,
-            offset: 100
         });
 
-        // Particles.js Background
-        particlesJS("particles-js", {
-            particles: {
-                number: { value: 80, density: { enable: true, value_area: 800 } },
-                color: { value: "#FF4A57" },
-                shape: { type: "circle" },
-                opacity: { value: 0.5, random: true },
-                size: { value: 3, random: true },
-                line_linked: {
-                    enable: true,
-                    distance: 150,
-                    color: "#6C63FF",
-                    opacity: 0.2,
-                    width: 1
-                },
-                move: {
-                    enable: true,
-                    speed: 2,
-                    direction: "none",
-                    random: true,
-                    straight: false,
-                    out_mode: "out",
-                    bounce: false
-                }
-            },
-            interactivity: {
-                detect_on: "canvas",
-                events: {
-                    onhover: { enable: true, mode: "repulse" },
-                    onclick: { enable: true, mode: "push" }
-                }
-            },
-            retina_detect: true
-        });
-
-        // Header Scroll Effect
-        window.addEventListener('scroll', () => {
-            const header = document.getElementById('header');
-            if (window.scrollY > 100) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
-
-        // Portfolio Filtering
-        const filterButtons = document.querySelectorAll('.filter-btn');
-        const portfolioItems = document.querySelectorAll('.portfolio-item');
-
-        filterButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                // Remove active class from all buttons
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                // Add active class to clicked button
-                button.classList.add('active');
-
-                const filterValue = button.getAttribute('data-filter');
-
-                portfolioItems.forEach(item => {
-                    if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
-                        item.style.display = 'block';
-                        setTimeout(() => {
-                            item.style.opacity = '1';
-                            item.style.transform = 'scale(1)';
-                        }, 10);
-                    } else {
-                        item.style.opacity = '0';
-                        item.style.transform = 'scale(0.8)';
-                        setTimeout(() => {
-                            item.style.display = 'none';
-                        }, 300);
-                    }
-                });
-            });
-        });
-
-        // Mobile Menu Toggle
+        // Enhanced Mobile Menu
         const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
         const navLinks = document.querySelector('.nav-links');
 
-        mobileMenuBtn.addEventListener('click', () => {
-            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-            if (navLinks.style.display === 'flex') {
+        mobileMenuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = navLinks.style.display === 'flex';
+            navLinks.style.display = isOpen ? 'none' : 'flex';
+
+            if (!isOpen) {
                 navLinks.style.flexDirection = 'column';
-                navLinks.style.position = 'absolute';
-                navLinks.style.top = '100%';
+                navLinks.style.position = 'fixed';
+                navLinks.style.top = '90px';
                 navLinks.style.left = '0';
+                navLinks.style.right = '0';
                 navLinks.style.width = '100%';
-                navLinks.style.backgroundColor = 'var(--dark)';
-                navLinks.style.padding = '30px';
-                navLinks.style.gap = '20px';
-                navLinks.style.boxShadow = '0 10px 30px rgba(0,0,0,0.2)';
+                navLinks.style.backgroundColor = 'rgba(15, 23, 42, 0.98)';
+                navLinks.style.backdropFilter = 'blur(20px)';
+                navLinks.style.padding = '40px 24px';
+                navLinks.style.gap = '30px';
+                navLinks.style.boxShadow = '0 20px 60px rgba(0,0,0,0.4)';
+                navLinks.style.zIndex = '999';
+                navLinks.style.height = 'calc(100vh - 90px)';
+                navLinks.style.overflowY = 'auto';
+                navLinks.style.borderTop = '1px solid var(--border)';
+
+                // Animate menu items
+                const links = navLinks.querySelectorAll('a');
+                links.forEach((link, index) => {
+                    link.style.opacity = '0';
+                    link.style.transform = 'translateY(-20px)';
+                    setTimeout(() => {
+                        link.style.transition = 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                        link.style.opacity = '1';
+                        link.style.transform = 'translateY(0)';
+                    }, index * 100);
+                });
             }
         });
 
-        // Smooth Scrolling for Anchor Links
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 768 &&
+                !navLinks.contains(e.target) &&
+                !mobileMenuBtn.contains(e.target) &&
+                navLinks.style.display === 'flex') {
+                navLinks.style.display = 'none';
+            }
+        });
+
+        // Smooth Scrolling with enhanced animation
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -1337,10 +1515,29 @@
 
                 const targetElement = document.querySelector(targetId);
                 if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
+                    const offset = 80;
+                    const targetPosition = targetElement.offsetTop - offset;
+                    const startPosition = window.pageYOffset;
+                    const distance = targetPosition - startPosition;
+                    const duration = 1000;
+                    let start = null;
+
+                    function animation(currentTime) {
+                        if (start === null) start = currentTime;
+                        const timeElapsed = currentTime - start;
+                        const run = ease(timeElapsed, startPosition, distance, duration);
+                        window.scrollTo(0, run);
+                        if (timeElapsed < duration) requestAnimationFrame(animation);
+                    }
+
+                    function ease(t, b, c, d) {
+                        t /= d / 2;
+                        if (t < 1) return c / 2 * t * t + b;
+                        t--;
+                        return -c / 2 * (t * (t - 2) - 1) + b;
+                    }
+
+                    requestAnimationFrame(animation);
 
                     // Close mobile menu if open
                     if (window.innerWidth <= 768) {
@@ -1349,8 +1546,9 @@
                 }
             });
         });
+
         // Add floating animation to elements
-        const animateElements = document.querySelectorAll('.portfolio-item, .contact-card, .stat-item');
+        const animateElements = document.querySelectorAll('.portfolio-card, .contact-card, .stat-item');
         animateElements.forEach(el => {
             el.addEventListener('mouseenter', () => {
                 el.classList.add('animate-float');
@@ -1361,23 +1559,22 @@
             });
         });
 
-        // Typewriter effect for hero title (optional enhancement)
-        const heroTitle = document.querySelector('.hero-title');
-        const originalText = heroTitle.innerHTML;
+        // Add subtle animations on scroll
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.5;
 
-        // Simulate a subtle glitch effect on hero title
-        setInterval(() => {
-            if (Math.random() > 0.7) {
-                heroTitle.style.textShadow = '0 0 10px var(--primary)';
-                setTimeout(() => {
-                    heroTitle.style.textShadow = 'none';
-                }, 100);
+            // Parallax effect for hero
+            const heroTitle = document.querySelector('.hero-title');
+            if (heroTitle && scrolled < 500) {
+                heroTitle.style.transform = `translateY(${rate * 0.5}px)`;
             }
-        }, 3000);
+        });
 
         // Console greeting
-        console.log('%c👋 Hello! Thanks for checking out my portfolio.', 'color: #FF4A57; font-size: 16px; font-weight: bold;');
-        console.log('%cDesign with Sameer | Professional Graphic Designer', 'color: #6C63FF; font-size: 14px;');
+        console.log('%c✨ Welcome to Sameer Designs', 'color: #3B82F6; font-size: 18px; font-weight: bold;');
+        console.log('%cProfessional Graphic Design Portfolio', 'color: #7C3AED; font-size: 14px;');
+        console.log('%cLet\'s create something amazing together!', 'color: #06B6D4; font-size: 12px;');
     </script>
 </body>
 
